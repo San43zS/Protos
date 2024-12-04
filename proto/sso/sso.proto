@@ -1,0 +1,38 @@
+syntax = "proto3"; // version of protobuf
+
+package auth; // auth package
+
+option go_package = "suns.sso.v1;ssov1"; // technical details
+
+service Auth { // for auth service
+  rpc Register (RegisterRequest) returns (RegisterResponse); // method for register
+  rpc Login (LoginRequest) returns (LoginResponse); // method for login (return tokens)
+  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse); // method for check admin
+}
+
+message RegisterRequest { // register request
+  string email = 1; // email
+  string password = 2; // password
+}
+
+message RegisterResponse { // register response
+  int64 user_id = 1; // user id of the registered user
+}
+
+message LoginRequest { // login request
+  string email = 1; // email
+  string password = 2; // password
+  int32 app_id = 3; // app id of the app to login to
+}
+
+message LoginResponse { // login response
+  string token = 1; // jwt token
+}
+
+message IsAdminRequest { // check admin request
+  int64 user_id = 1; // user id
+}
+
+message IsAdminResponse { // check admin response
+  bool is_admin = 1; // is admin
+}
